@@ -1,0 +1,46 @@
+//User function template for C++
+
+/* The Node structure is
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+}; 
+*/
+
+// The given root is the root of the Binary Tree
+// Return the root of the generated BST
+void inorder_add(Node *root,vector<int> &v,int &i)
+{
+    if(root==NULL)
+    return;
+    inorder_add(root->left,v,i);
+    root->data=v[i];
+    i++;
+    inorder_add(root->right,v,i);
+}
+void inorder_collect(Node *root,vector<int> &v)
+{
+    if(root==NULL)
+    return;
+    inorder_collect(root->left,v);
+    v.push_back(root->data);
+    inorder_collect(root->right,v);
+}
+Node *binaryTreeToBST (Node *root)
+{
+   if(root==NULL)
+   return NULL;
+   vector<int> v;
+   inorder_collect(root,v);
+   sort(v.begin(),v.end());
+   int i=0;
+   inorder_add(root,v,i);
+   return root;
+}
