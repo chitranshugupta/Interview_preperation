@@ -1,0 +1,36 @@
+Node *find(Node *root)
+{
+    while(root->right)
+    {
+        root=root->right;
+    }
+    return root;
+}
+Node *deleteNode(Node *root,  int X)
+{
+    if(root==NULL)
+    return NULL;
+    if(root->data>X)
+    root->left=deleteNode(root->left,X);
+    else if(root->data<X)
+    root->right=deleteNode(root->right,X);
+    else{
+    if(root->left==NULL and root->right==NULL)
+    {
+        free(root);
+        return NULL;
+    }
+    else if(!root->left or !root->right)
+    {
+        return root->left ?root->left : root->right;
+    }
+    else
+    {
+         Node *temp= find(root->left);//inorder_predecessor
+         root->data=temp->data;
+         root->left=deleteNode(root->left,temp->data);
+    }
+    
+    }
+    return root;
+}

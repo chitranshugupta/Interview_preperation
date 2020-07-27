@@ -1,0 +1,33 @@
+void helper(Node *root,Node *&pre,Node *&first,Node *&sec)
+{
+    if(root==NULL)
+    return ;
+    helper(root->left,pre,first,sec);
+    if(pre!=NULL and pre->data>root->data)
+    {
+        if(first==NULL)
+        {
+            first=pre;
+            sec=root;
+        }
+        else{
+            sec=root;
+        }
+        
+    }
+    pre=root;
+    helper(root->right,pre,first,sec);
+}
+
+struct Node *correctBST( struct Node* root )
+{
+    Node *pre,*first,*sec;
+    if(root==NULL)
+    return NULL;
+    pre=NULL;
+    first=NULL;
+    sec=NULL;
+    helper(root,pre,first,sec);
+    swap(first->data,sec->data);
+    return root;
+}
